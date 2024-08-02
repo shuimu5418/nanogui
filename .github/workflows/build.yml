@@ -1,4 +1,4 @@
-name: Build
+name: Build2
 
 on:
   workflow_dispatch:
@@ -42,6 +42,12 @@ jobs:
       - name: Configure
         run: >
           cmake -S . -B build "-DPython_EXECUTABLE=$(python3 -c 'import sys; print(sys.executable)')"
-
+          
       - name: Build C++
         run: cmake --build build -j 2
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: build/
